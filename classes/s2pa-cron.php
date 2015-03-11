@@ -1,13 +1,13 @@
 <?php
 
-if ( ! class_exists( 'WPPS_Cron' ) ) {
+if ( ! class_exists( 'S2PA_Cron' ) ) {
 
 	/**
 	 * Handles cron jobs and intervals
 	 *
 	 * Note: Because WP-Cron only fires hooks when HTTP requests are made, make sure that an external monitoring service pings the site regularly to ensure hooks are fired frequently
 	 */
-	class WPPS_Cron extends WPPS_Module {
+	class S2PA_Cron extends S2PA_Module {
 		protected static $readable_properties  = array();
 		protected static $writeable_properties = array();
 
@@ -38,17 +38,17 @@ if ( ! class_exists( 'WPPS_Cron' ) ) {
 		 * @return array
 		 */
 		public static function add_custom_cron_intervals( $schedules ) {
-			$schedules[ 'wpps_debug' ] = array(
+			$schedules[ 's2pa_debug' ] = array(
 				'interval' => 5,
 				'display'  => 'Every 5 seconds'
 			);
 
-			$schedules[ 'wpps_ten_minutes' ] = array(
+			$schedules[ 's2pa_ten_minutes' ] = array(
 				'interval' => 60 * 10,
 				'display'  => 'Every 10 minutes'
 			);
 
-			$schedules[ 'wpps_example_interval' ] = array(
+			$schedules[ 's2pa_example_interval' ] = array(
 				'interval' => 60 * 60 * 5,
 				'display'  => 'Every 5 hours'
 			);
@@ -66,9 +66,9 @@ if ( ! class_exists( 'WPPS_Cron' ) ) {
 
 			// Example job to fire between 1am and 3am
 			if ( (int) date( 'G', $now ) >= 1 && (int) date( 'G', $now ) <= 3 ) {
-				if ( ! get_transient( 'wpps_cron_example_timed_job' ) ) {
-					//WPPS_CPT_Example::exampleTimedJob();
-					set_transient( 'wpps_cron_example_timed_job', true, 60 * 60 * 6 );
+				if ( ! get_transient( 's2pa_cron_example_timed_job' ) ) {
+					//S2PA_CPT_Example::exampleTimedJob();
+					set_transient( 's2pa_cron_example_timed_job', true, 60 * 60 * 6 );
 				}
 			}
 		}
@@ -98,8 +98,8 @@ if ( ! class_exists( 'WPPS_Cron' ) ) {
 		 * @mvc Controller
 		 */
 		public function register_hook_callbacks() {
-			add_action( 'wpps_cron_timed_jobs',  __CLASS__ . '::fire_job_at_time' );
-			add_action( 'wpps_cron_example_job', __CLASS__ . '::example_job' );
+			add_action( 's2pa_cron_timed_jobs',  __CLASS__ . '::fire_job_at_time' );
+			add_action( 's2pa_cron_example_job', __CLASS__ . '::example_job' );
 
 			add_action( 'init',                  array( $this, 'init' ) );
 
@@ -114,19 +114,19 @@ if ( ! class_exists( 'WPPS_Cron' ) ) {
 		 * @param bool $network_wide
 		 */
 		public function activate( $network_wide ) {
-			if ( wp_next_scheduled( 'wpps_cron_timed_jobs' ) === false ) {
+			if ( wp_next_scheduled( 's2pa_cron_timed_jobs' ) === false ) {
 				wp_schedule_event(
 					current_time( 'timestamp' ),
-					'wpps_ten_minutes',
-					'wpps_cron_timed_jobs'
+					's2pa_ten_minutes',
+					's2pa_cron_timed_jobs'
 				);
 			}
 
-			if ( wp_next_scheduled( 'wpps_cron_example_job' ) === false ) {
+			if ( wp_next_scheduled( 's2pa_cron_example_job' ) === false ) {
 				wp_schedule_event(
 					current_time( 'timestamp' ),
-					'wpps_example_interval',
-					'wpps_cron_example_job'
+					's2pa_example_interval',
+					's2pa_cron_example_job'
 				);
 			}
 		}
@@ -137,8 +137,8 @@ if ( ! class_exists( 'WPPS_Cron' ) ) {
 		 * @mvc Controller
 		 */
 		public function deactivate() {
-			wp_clear_scheduled_hook( 'wpps_cron_timed_jobs' );
-			wp_clear_scheduled_hook( 'wpps_cron_example_job' );
+			wp_clear_scheduled_hook( 's2pa_cron_timed_jobs' );
+			wp_clear_scheduled_hook( 's2pa_cron_example_job' );
 		}
 
 		/**
@@ -176,5 +176,5 @@ if ( ! class_exists( 'WPPS_Cron' ) ) {
 		protected function is_valid( $property = 'all' ) {
 			return true;
 		}
-	} // end WPPS_Cron
+	} // end S2PA_Cron
 }
