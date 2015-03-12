@@ -141,11 +141,15 @@ if ( ! class_exists( 'S2PA_Settings' ) ) {
 		 */
 		protected static function get_default_settings() {
 			$basic = array(
-				'field-example1' => ''
+				'api_url' => '',
+				'merchant_id' => 0,
+				'site_id' => 0,
+				'signature' => '',
+				'return_url' => '',
 			);
 
 			$advanced = array(
-				'field-example2' => ''
+				'allow_site_creation' => 0,
 			);
 
 			return array(
@@ -226,18 +230,18 @@ if ( ! class_exists( 'S2PA_Settings' ) ) {
 			 */
 			add_settings_section(
 				's2pa_section-basic',
-				'Basic Settings',
+				__( 'Demo reuqests' ),
 				__CLASS__ . '::markup_section_headers',
 				's2pa_settings'
 			);
 
 			add_settings_field(
-				's2pa_field-example1',
-				'Example Field 1',
+				's2pa_field-demo-settings',
+				__( 'Demo requests settings' ),
 				array( $this, 'markup_fields' ),
 				's2pa_settings',
 				's2pa_section-basic',
-				array( 'label_for' => 's2pa_field-example1' )
+				array( 'label_for' => 's2pa_field-demo-settings' )
 			);
 
 
@@ -246,7 +250,7 @@ if ( ! class_exists( 'S2PA_Settings' ) ) {
 			 */
 			add_settings_section(
 				's2pa_section-advanced',
-				'Advanced Settings',
+				__( 'Advanced Settings' ),
 				__CLASS__ . '::markup_section_headers',
 				's2pa_settings'
 			);
@@ -314,12 +318,13 @@ if ( ! class_exists( 'S2PA_Settings' ) ) {
 
 
 			/*
-			 * Basic Settings
+			 * Demo requests Settings
 			 */
 
-			if ( strcmp( $new_settings['basic']['field-example1'], 'valid data' ) !== 0 ) {
-				add_notice( 'Example 1 must equal "valid data"', 'error' );
-				$new_settings['basic']['field-example1'] = self::$default_settings['basic']['field-example1'];
+			if ( empty( $new_settings['basic']['api_url'] ) )
+			{
+				add_notice( __( 'Please provide Post URL. Settings not saved.' ), 'error' );
+				return false;
 			}
 
 

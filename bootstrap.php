@@ -1,11 +1,11 @@
 <?php
 /**
- * @package Smart2Pay-API
+ * @package Smart2Pay API
  * @version 1.0.0
  */
 /*
-Plugin Name: Smart2Pay-API
-Plugin URI: http://www.google.com/
+Plugin Name: Smart2Pay API
+Plugin URI: https://github.com/andys2p/S2P-WP-APIs
 Description: We play with Smart2Pay API
 Version: 1.0.0
 Author: Andy
@@ -26,6 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 define( 'S2PA_NAME',                 'Smart2Pay API' );
 define( 'S2PA_REQUIRED_PHP_VERSION', '5.3' );                          // because of get_called_class()
 define( 'S2PA_REQUIRED_WP_VERSION',  '3.1' );                          // because of esc_textarea()
+define( 'S2PA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+define( 'S2PA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 /**
  * Checks if the system requirements are met
@@ -76,7 +78,8 @@ if ( s2pa_requirements_met() ) {
 	require_once( __DIR__ . '/classes/s2pa-cron.php' );
 	require_once( __DIR__ . '/classes/s2pa-instance-class.php' );
 
-	if ( class_exists( 'Smart2Pay_API_Plugin' ) ) {
+	if ( class_exists( 'Smart2Pay_API_Plugin' ) )
+	{
 		$GLOBALS['s2pa'] = Smart2Pay_API_Plugin::get_instance();
 		register_activation_hook(   __FILE__, array( $GLOBALS['s2pa'], 'activate' ) );
 		register_deactivation_hook( __FILE__, array( $GLOBALS['s2pa'], 'deactivate' ) );

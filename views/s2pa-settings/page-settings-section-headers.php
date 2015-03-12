@@ -1,9 +1,10 @@
-<?php if ( 's2pa_section-basic' == $section['id'] ) : ?>
+<?php
 
-	<p>Example section introduction.</p>
+	if ( 's2pa_section-basic' == $section['id'] ) {
 
-<?php elseif ( 's2pa_section-advanced' == $section['id'] ) : ?>
+		?><p><?php _e( 'Settings related to API requests initiated with default test Merchant ID, Site ID and Signature. Return URL is a script in current WP platform to show Notification response.' )?></p><?php
 
-	<p>Another example section introduction.</p>
+	} elseif ( 's2pa_section-advanced' == $section['id'] ) {
 
-<?php endif; ?>
+		?><p>Another example section introduction.</p><?php
+	}

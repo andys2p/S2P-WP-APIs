@@ -7,12 +7,13 @@ if ( ! class_exists( 'Smart2Pay_API_Plugin' ) ) {
 	 *
 	 * Smart2Pay_API_Plugin is an object-oriented/MVC base for building WordPress plugins
 	 */
-	class Smart2Pay_API_Plugin extends S2PA_Module {
+	class Smart2Pay_API_Plugin extends S2PA_Module
+	{
 		protected static $readable_properties  = array();    // These should really be constants, but PHP doesn't allow class constants to be arrays
 		protected static $writeable_properties = array();
 		protected $modules;
 
-		const VERSION    = '0.4a';
+		const VERSION    = '1.0.0';
 		const PREFIX     = 's2pa_';
 		const DEBUG_MODE = false;
 
